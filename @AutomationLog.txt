@@ -1,0 +1,1 @@
+2026-04-17 17:04:21.757 <string>[1] <module> -> Find Control Timeout(10s): {Name: '新榜小豆芽', ControlType: WindowControl}

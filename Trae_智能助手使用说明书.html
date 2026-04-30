@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trae 智能助手使用说明书</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #121a33;
+      --text: #eaf0ff;
+      --muted: #b8c4ee;
+      --accent: #7aa2ff;
+      --ok: #46d19c;
+      --warn: #ffd166;
+      --border: #2a3868;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(180deg, #0b1020 0%, #0f1730 100%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+    h1, h2, h3 { line-height: 1.3; }
+    h1 { margin-top: 0; font-size: 32px; }
+    h2 {
+      margin-top: 30px;
+      font-size: 24px;
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+    }
+    h3 { font-size: 18px; margin-top: 20px; }
+    p, li { color: var(--muted); }
+    .card {
+      background: rgba(18, 26, 51, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 14px 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .tag {
+      display: inline-block;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 2px 10px;
+      margin-right: 8px;
+      color: var(--text);
+      font-size: 12px;
+      background: #1a2448;
+    }
+    code {
+      background: #1a2448;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 6px;
+      color: #d4e0ff;
+      font-family: Consolas, "Courier New", monospace;
+    }
+    pre {
+      background: #0a1229;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      overflow: auto;
+    }
+    .ok { color: var(--ok); }
+    .warn { color: var(--warn); }
+    ul { padding-left: 20px; }
+    .footer {
+      margin-top: 26px;
+      font-size: 13px;
+      color: #93a1d8;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Trae 智能助手使用说明书</h1>
+    <p>
+      这份说明书帮你快速上手：<strong>我是谁、和 Trae / Claude Code 是什么关系、各自区别是什么</strong>，以及你在日常开发中怎样更高效地使用我。
+    </p>
+
+    <div class="card">
+      <span class="tag">定位</span>
+      <span class="tag">对比</span>
+      <span class="tag">最佳实践</span>
+      <p>
+        适合：自动化脚本开发、故障排查、项目重构、命令行执行、代码解释与文档沉淀。
+      </p>
+    </div>
+
+    <h2>1. 我、Trae、Claude Code 的关系</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Trae（你的 IDE/工作台）</h3>
+        <p>
+          Trae 是你操作项目的编辑器和执行环境：打开文件、运行命令、查看输出、管理工程。
+        </p>
+      </div>
+      <div class="card">
+        <h3>我（当前智能助手）</h3>
+        <p>
+          我是运行在 Trae 里的 AI 工程助手，能读写文件、执行命令、分析项目结构，并按你的目标推进任务。
+        </p>
+      </div>
+      <div class="card">
+        <h3>Claude Code（另一类代码助手）</h3>
+        <p>
+          Claude Code 通常指 Anthropic 生态下的代码代理/工具形态。它和我属于<strong>不同产品路线</strong>，但目标类似：提高开发效率。
+        </p>
+      </div>
+    </div>
+
+    <h2>2. 关键区别（你最关心的）</h2>
+    <div class="card">
+      <ul>
+        <li><strong>载体不同：</strong>Trae 是 IDE；我是 Trae 内的助手；Claude Code 是另一套助手体验/工具链。</li>
+        <li><strong>交互方式不同：</strong>我可直接结合当前工作区文件与命令执行结果持续迭代。</li>
+        <li><strong>模型来源可配置：</strong>你可以通过网关或配置切换底层模型，但使用方式（提需求→执行→验收）可以保持一致。</li>
+      </ul>
+      <p class="warn">
+        注意：助手名称与底层模型名称不是一回事。你看到的是“助手体验”，底层可能随网关策略动态映射。
+      </p>
+    </div>
+
+    <h2>3. 日常怎么更好地用我（高效模板）</h2>
+    <div class="card">
+      <h3>3.1 给任务时，尽量包含 4 要素</h3>
+      <ul>
+        <li><strong>目标：</strong>你最终要什么结果（例如：生成可运行脚本）。</li>
+        <li><strong>范围：</strong>修改哪些文件/目录，哪些不能动。</li>
+        <li><strong>标准：</strong>成功判定（比如“能跑通、日志清晰、失败可重试”）。</li>
+        <li><strong>约束：</strong>语言、风格、依赖、系统环境。</li>
+      </ul>
+      <pre><code>示例：
+请在 xiaodouya_poster.py 上加“发布失败重试3次”，
+不要改配置文件结构，给我最小改动补丁并说明回滚方法。</code></pre>
+    </div>
+
+    <div class="card">
+      <h3>3.2 让助手更稳的 5 个习惯</h3>
+      <ul>
+        <li>先让我“读文件+总结现状”，再让我改代码。</li>
+        <li>复杂需求拆步骤：先设计，再实现，再测试。</li>
+        <li>明确“是否可执行命令、是否可联网”。</li>
+        <li>要求“变更说明 + 风险点 + 验证命令”。</li>
+        <li>每次改完让助手给你“下一步建议”。</li>
+      </ul>
+    </div>
+
+    <h2>4. 推荐工作流（可直接照抄）</h2>
+    <div class="card">
+      <ol>
+        <li>你：先说目标与限制。</li>
+        <li>我：先读相关文件并总结。</li>
+        <li>你：确认方案后让我实施。</li>
+        <li>我：改代码、跑命令、回传结果。</li>
+        <li>你：基于结果继续迭代或收尾。</li>
+      </ol>
+      <p class="ok">一句话：把我当“会动手的结对工程师”，而不只是聊天机器人。</p>
+    </div>
+
+    <h2>5. 安全与密钥建议</h2>
+    <div class="card">
+      <ul>
+        <li>不要在长期聊天记录中暴露真实 API Key。</li>
+        <li>如果已泄露，立即<strong>撤销并重建</strong>密钥。</li>
+        <li>将密钥放到环境变量或受控配置，不要硬编码进仓库。</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      版本：v1.0（按你当前 Trae 使用场景编写）
+    </div>
+  </div>
+</body>
+</html>

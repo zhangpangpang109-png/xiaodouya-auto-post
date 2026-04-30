@@ -1,0 +1,9 @@
+{
+  "app_exe": true,
+  "folder_auto": true,
+  "folder_auto_published": true,
+  "folder_xhs_majiang": true,
+  "folder_xhs_majiang_published": true,
+  "pywinauto": true,
+  "win32gui": true
+}

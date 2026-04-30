@@ -1,0 +1,26 @@
+{
+  "app_exe": "C:\\Program Files\\xiaodouya\\新榜小豆芽.exe",
+  "source_dir": "C:\\Users\\TU\\Desktop\\小红书麻将",
+  "published_dir": "C:\\Users\\TU\\Desktop\\小红书麻将\\已发布",
+  "collection_name": "天天麻将小红书",
+  "account_prefixes": [
+    "H01",
+    "H02",
+    "H03",
+    "H04",
+    "H05",
+    "H06",
+    "H07",
+    "H08",
+    "H09",
+    "H10",
+    "H11",
+    "H12"
+  ],
+  "publish_per_account": 1,
+  "description_text": "进#全民天天麻将小游戏 🎮玩同款，打到雀神段位领竹叶青茶叶",
+  "publish_delay_sec": 2,
+  "upload_wait_sec": 2,
+  "single_account_mode": false,
+  "single_account": "H01"
+}

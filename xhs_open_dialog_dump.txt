@@ -1,0 +1,51 @@
+[dialog dump] handle=1182746
+hwnd=2228856 class=DUIViewWndClassName text='' rect=(61,168,1320,1238) visible=1 enabled=1
+hwnd=528250 class=DirectUIHWND text='' rect=(61,168,1320,1238) visible=1 enabled=1
+hwnd=3345832 class=CtrlNotifySink text='' rect=(64,216,295,1238) visible=1 enabled=1
+hwnd=1707874 class=NamespaceTreeControl text='命名空间树状控制项' rect=(64,216,295,1238) visible=1 enabled=1
+hwnd=459638 class=Static text='命名空间树状控制项' rect=(64,216,64,216) visible=0 enabled=1
+hwnd=7930516 class=SysTreeView32 text='导航窗格' rect=(64,216,295,1238) visible=1 enabled=1
+hwnd=8588678 class=CtrlNotifySink text='' rect=(61,168,61,168) visible=0 enabled=1
+hwnd=462748 class=Shell Preview Extension Host text='Shell Preview Extension Host' rect=(61,168,61,168) visible=0 enabled=1
+hwnd=15270298 class=CtrlNotifySink text='' rect=(301,216,1320,1238) visible=1 enabled=1
+hwnd=1968226 class=SHELLDLL_DefView text='ShellView' rect=(301,216,1320,1238) visible=1 enabled=1
+hwnd=7143890 class=DirectUIHWND text='' rect=(301,216,1320,1238) visible=1 enabled=1
+hwnd=8194668 class=CtrlNotifySink text='' rect=(301,216,301,216) visible=0 enabled=1
+hwnd=266538 class=ScrollBar text='' rect=(301,216,301,216) visible=0 enabled=1
+hwnd=9044424 class=CtrlNotifySink text='' rect=(301,216,301,216) visible=0 enabled=1
+hwnd=463112 class=ScrollBar text='' rect=(301,216,301,216) visible=0 enabled=1
+hwnd=985336 class=Static text='文件名(&N):' rect=(265,1266,350,1290) visible=1 enabled=1
+hwnd=10358166 class=ComboBoxEx32 text='' rect=(358,1262,993,1295) visible=1 enabled=1
+hwnd=43450862 class=ComboBox text='' rect=(358,1262,993,1295) visible=1 enabled=1
+hwnd=724948 class=Edit text='' rect=(362,1266,964,1290) visible=1 enabled=1
+hwnd=852872 class=Static text='文件类型(&T):' rect=(61,95,61,95) visible=1 enabled=1
+hwnd=20120012 class=ComboBox text='' rect=(1011,1262,1293,1294) visible=1 enabled=1
+hwnd=11996730 class=Button text='打开(&O)' rect=(1011,1303,1143,1342) visible=1 enabled=1
+hwnd=4587978 class=Button text='取消' rect=(1161,1303,1293,1342) visible=1 enabled=1
+hwnd=1117042 class=ScrollBar text='' rect=(1294,1342,1320,1368) visible=1 enabled=1
+hwnd=1510300 class=Static text='' rect=(245,110,1056,137) visible=0 enabled=1
+hwnd=14746250 class=Static text='' rect=(75,116,199,164) visible=0 enabled=1
+hwnd=4456826 class=Static text='' rect=(245,146,1059,182) visible=0 enabled=1
+hwnd=1574300 class=ListBox text='' rect=(61,168,1065,770) visible=0 enabled=1
+hwnd=1510822 class=Static text='' rect=(265,95,1293,95) visible=0 enabled=1
+hwnd=200704 class=Button text='帮助(&H)' rect=(784,788,922,830) visible=0 enabled=0
+hwnd=6556940 class=WorkerW text='' rect=(61,95,1320,168) visible=1 enabled=1
+hwnd=24252124 class=ReBarWindow32 text='' rect=(61,95,1320,168) visible=1 enabled=1
+hwnd=266246 class=TravelBand text='' rect=(61,104,213,155) visible=1 enabled=1
+hwnd=5507326 class=ToolbarWindow32 text='导航按钮' rect=(67,107,213,155) visible=1 enabled=1
+hwnd=5047070 class=UpBand text='' rect=(213,102,268,157) visible=1 enabled=1
+hwnd=659436 class=ToolbarWindow32 text='上区段' rect=(213,107,268,162) visible=1 enabled=1
+hwnd=3801626 class=Address Band Root text='' rect=(268,95,993,165) visible=1 enabled=1
+hwnd=266248 class=msctls_progress32 text='' rect=(270,105,991,157) visible=1 enabled=1
+hwnd=6161006 class=Breadcrumb Parent text='' rect=(270,105,891,157) visible=1 enabled=1
+hwnd=200612 class=ToolbarWindow32 text='地址: C:\\Users\\TU\\Desktop\\小红书麻将' rect=(279,105,891,157) visible=1 enabled=1
+hwnd=786482 class=ToolbarWindow32 text='地址区段' rect=(891,105,991,157) visible=1 enabled=1
+hwnd=790488 class=ComboBoxEx32 text='' rect=(270,105,891,154) visible=0 enabled=1
+hwnd=266146 class=ComboBox text='' rect=(270,105,891,154) visible=0 enabled=1
+hwnd=5636912 class=Edit text='' rect=(302,117,858,141) visible=0 enabled=1
+hwnd=200614 class=SeparatorBand text='' rect=(997,129,1003,130) visible=1 enabled=1
+hwnd=1706642 class=UniversalSearchBand text='' rect=(1003,101,1309,159) visible=1 enabled=1
+hwnd=1379166 class=Search Box text='' rect=(1003,104,1309,158) visible=1 enabled=1
+hwnd=200606 class=SearchEditBoxWrapperClass text='' rect=(1008,104,1304,158) visible=1 enabled=1
+hwnd=331688 class=DirectUIHWND text='' rect=(1008,104,1304,158) visible=1 enabled=1
+hwnd=1772946 class=SeparatorBand text='' rect=(1313,129,1320,130) visible=1 enabled=1

@@ -1,0 +1,22 @@
+{
+  "app_exe": "C:\\Program Files\\xiaodouya\\新榜小豆芽.exe",
+  "source_dir": "C:\\Users\\TU\\Desktop\\自动发布",
+  "published_dir": "C:\\Users\\TU\\Desktop\\自动发布\\已发布",
+  "task_title": "三国冰河时代矩阵短视频",
+  "account_prefixes": [
+    "01号",
+    "02号",
+    "03号",
+    "04号",
+    "05号",
+    "06号",
+    "07号"
+  ],
+  "hashtags": [
+    "#疯少的时代",
+    "#百日破冰征程",
+    "#狮心会点燃三国冰河时代"
+  ],
+  "single_run": false,
+  "publish_delay_sec": 5
+}

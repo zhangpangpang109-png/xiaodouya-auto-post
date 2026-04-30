@@ -1,0 +1,90 @@
+
+[H01] 处理 享受每一局的快乐.mp4 出错：
+Traceback (most recent call last):
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 154, in run
+    self.publish_one(account_prefix, video_path)
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 948, in publish_one
+    self.click_upload_video()
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 565, in click_upload_video
+    raise RuntimeError("未能打开上传对话框（锚点点击与文本兜底均失败）")
+RuntimeError: 未能打开上传对话框（锚点点击与文本兜底均失败）
+
+[H02] 处理 今天又是开心搓麻的一天.mp4 出错：
+Traceback (most recent call last):
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 154, in run
+    self.publish_one(account_prefix, video_path)
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 948, in publish_one
+    self.click_upload_video()
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 565, in click_upload_video
+    raise RuntimeError("未能打开上传对话框（锚点点击与文本兜底均失败）")
+RuntimeError: 未能打开上传对话框（锚点点击与文本兜底均失败）
+
+[H03] 处理 今天手气好到离谱.mp4 出错：
+Traceback (most recent call last):
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 154, in run
+    self.publish_one(account_prefix, video_path)
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 944, in publish_one
+    self.click_text(["多开面板"], exact=False, retry=2)
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 398, in click_text
+    self.clear_onboarding_popups()
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 383, in clear_onboarding_popups
+    for control in self.descendants(control_type="Button"):
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 366, in descendants
+    return self.window.descendants(control_type=control_type)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TU\AppData\Local\Programs\Python\Python312\Lib\site-packages\pywinauto\application.py", line 396, in __getattribute__
+    ctrls = self.__resolve_control(self.criteria)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TU\AppData\Local\Programs\Python\Python312\Lib\site-packages\pywinauto\application.py", line 250, in __resolve_control
+    ctrl = wait_until_passes(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TU\AppData\Local\Programs\Python\Python312\Lib\site-packages\pywinauto\timings.py", line 436, in wait_until_passes
+    func_val = func(*args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TU\AppData\Local\Programs\Python\Python312\Lib\site-packages\pywinauto\application.py", line 203, in __get_ctrl
+    dialog = self.backend.generic_wrapper_class(findwindows.find_element(**criteria[0]))
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TU\AppData\Local\Programs\Python\Python312\Lib\site-packages\pywinauto\findwindows.py", line 98, in find_element
+    raise exception
+pywinauto.findwindows.ElementAmbiguousError: There are 2 elements that match the criteria {'title': '新榜小豆芽', 'top_level_only': True, 'backend': 'uia'}
+
+[H05] 处理 和朋友们搓麻的快乐时光.mp4 出错：
+Traceback (most recent call last):
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 154, in run
+    self.publish_one(account_prefix, video_path)
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 948, in publish_one
+    max_attempts = 8
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 565, in click_upload_video
+    raise RuntimeError("未能打开上传对话框（锚点点击与文本兜底均失败）")
+RuntimeError: 未能打开上传对话框（锚点点击与文本兜底均失败）
+
+[H06] 处理 快乐就是朴实无华地搓麻将.mp4 出错：
+Traceback (most recent call last):
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 154, in run
+    self.publish_one(account_prefix, video_path)
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 948, in publish_one
+    max_attempts = 8
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 565, in click_upload_video
+    raise RuntimeError("未能打开上传对话框（锚点点击与文本兜底均失败）")
+RuntimeError: 未能打开上传对话框（锚点点击与文本兜底均失败）
+
+[H07] 处理 快乐就是胡牌那一瞬间.mp4 出错：
+Traceback (most recent call last):
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 154, in run
+    self.publish_one(account_prefix, video_path)
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 948, in publish_one
+    max_attempts = 8
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 565, in click_upload_video
+    raise RuntimeError("未能打开上传对话框（锚点点击与文本兜底均失败）")
+RuntimeError: 未能打开上传对话框（锚点点击与文本兜底均失败）
+
+[H01] 处理 享受每一局的快乐.mp4 出错：
+Traceback (most recent call last):
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 154, in run
+    self.publish_one(account_prefix, video_path)
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 978, in publish_one
+    self.click_upload_video()
+  File "C:\Users\TU\Desktop\Trae Pro\xhs_xiaodouya_poster.py", line 565, in click_upload_video
+    raise RuntimeError("未能打开上传对话框（锚点点击与文本兜底均失败）")
+RuntimeError: 未能打开上传对话框（锚点点击与文本兜底均失败）
