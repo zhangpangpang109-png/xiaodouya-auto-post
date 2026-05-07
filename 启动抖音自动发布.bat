@@ -15,13 +15,13 @@ cd /d "%~dp0"
 
 set "ACCIO_PY=C:\ProgramData\Accio\pre-install\7d5a6d879db7\python\python.exe"
 if exist "%ACCIO_PY%" (
-    "%ACCIO_PY%" xiaodouya_poster.py
+    "%ACCIO_PY%" xiaodouya_launcher.py
 ) else (
     where py >nul 2>nul
     if %errorlevel%==0 (
-        py xiaodouya_poster.py
+        py xiaodouya_launcher.py
     ) else (
-        python xiaodouya_poster.py
+        python xiaodouya_launcher.py
     )
 )
 

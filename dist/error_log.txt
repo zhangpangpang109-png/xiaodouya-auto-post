@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "xiaodouya_poster.py", line 606, in main
-  File "xiaodouya_poster.py", line 36, in load_config
-  File "pathlib.py", line 1027, in read_text
-  File "pathlib.py", line 1013, in open
-FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\TU\\AppData\\Local\\Temp\\_MEI509602\\xiaodouya_config.json'

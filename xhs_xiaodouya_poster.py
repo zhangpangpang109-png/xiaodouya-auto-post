@@ -29,7 +29,7 @@ if getattr(sys, 'frozen', False):
 else:
     application_path = Path(__file__).parent
 
-CONFIG_PATH = application_path / "xhs_xiaodouya_config.json"
+DEFAULT_CONFIG_PATH = application_path / "xhs_xiaodouya_config.json"
 VIDEO_EXTS = {".mp4", ".mov", ".avi", ".mkv", ".webm"}
 
 
@@ -49,7 +49,8 @@ class Config:
 
 
 def load_config() -> Config:
-    data = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    config_path = Path(os.environ.get("XHS_XIAODOUYA_CONFIG_PATH", str(DEFAULT_CONFIG_PATH)))
+    data = json.loads(config_path.read_text(encoding="utf-8"))
     return Config(
         app_exe=data.get("app_exe", DEFAULT_APP_EXE),
         source_dir=Path(data["source_dir"]),
@@ -59,7 +60,7 @@ def load_config() -> Config:
         publish_per_account=int(data.get("publish_per_account", 1)),
         description_text=data.get(
             "description_text",
-            "进#全民天天麻将小游戏 🎮玩同款，打到雀神段位领竹叶青茶叶",
+            "#全民天天麻将小游戏#川麻",
         ),
         publish_delay_sec=float(data.get("publish_delay_sec", 8)),
         upload_wait_sec=float(data.get("upload_wait_sec", 10)),

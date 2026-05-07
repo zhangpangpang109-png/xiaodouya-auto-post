@@ -9,7 +9,7 @@ echo ===================================================
 echo.
 echo 发布参数：
 echo 1. 视频目录：C:\Users\TU\Desktop\小红书麻将
-echo 2. 发布账号：H01-H14（每账号1条）
+echo 2. 发布账号：启动后可手动选择 H01-H12
 echo 3. 已发布目录：C:\Users\TU\Desktop\小红书麻将\已发布
 echo.
 echo 请确保：
@@ -23,7 +23,7 @@ echo 按任意键开始执行...（如需取消请直接关闭窗口）
 pause >nul
 
 cd /d "%~dp0"
-py -3 xhs_xiaodouya_poster.py
+py -3 xhs_xiaodouya_launcher.py
 
 echo.
 echo ===================================================

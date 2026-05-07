@@ -1,24 +1,23 @@
-# 小豆芽抖音发布脚本
+# 小豆芽多平台自动发布脚本
 
-这是基于你当前电脑上的 `新榜小豆芽` 页面结构写的一版本地自动化脚本。
+这是一个基于 `新榜小豆芽` 客户端的本地自动化仓库，当前包含两个平台脚本：
 
-## 已验证链路
+- `xiaodouya_poster.py`：抖音自动发布
+- `xhs_xiaodouya_poster.py`：小红书自动发布
 
-- 打开 `01号` 账号
-- 进入《三国冰河时代矩阵短视频》任务详情
-- 点击任务内 `上传视频`
-- 在系统文件框中选取视频
-- 进入作品信息页
-- 标题后自动补固定话题
-- 选择 `Ai智能推荐封面` 的第一个
-- 滚动到发布区并点击 `发布`
-- 发布完成后把视频移动到 `已发布` 文件夹
+仓库定位是“一个仓库，两个项目”，便于统一维护依赖、启动脚本和公共运行约定。
 
-## 文件说明
+## 项目结构
 
-- `xiaodouya_poster.py`: 自动化主脚本
-- `xiaodouya_config.json`: 运行配置
-- `requirements.txt`: Python 依赖
+- `xiaodouya_poster.py`：抖音自动发布主脚本
+- `xiaodouya_launcher.py`：抖音启动入口
+- `xiaodouya_config.example.json`：抖音配置示例
+- `xhs_xiaodouya_poster.py`：小红书自动发布主脚本
+- `xhs_xiaodouya_launcher.py`：小红书启动入口
+- `xhs_xiaodouya_config.example.json`：小红书配置示例
+- `requirements.txt`：Python 依赖
+- `启动抖音自动发布.bat`：抖音一键启动
+- `启动小红书自动发布.bat`：小红书一键启动
 
 ## 安装依赖
 
@@ -26,35 +25,61 @@
 py -3 -m pip install -r requirements.txt
 ```
 
-## 运行脚本
+## 配置文件
+
+仓库默认不提交真实本地配置，请先复制示例文件再填写你自己的路径和任务信息：
 
 ```powershell
-py -3 .\xiaodouya_poster.py
+Copy-Item .\xiaodouya_config.example.json .\xiaodouya_config.json
+Copy-Item .\xhs_xiaodouya_config.example.json .\xhs_xiaodouya_config.json
 ```
 
-## 当前默认配置
+需要修改的通常包括：
 
-- 素材目录: `C:\Users\TU\Desktop\自动发布`
-- 已发布目录: `C:\Users\TU\Desktop\自动发布\已发布`
-- 任务名: `三国冰河时代矩阵短视频`
-- 固定话题:
-  - `#疯少的时代`
-  - `#百日破冰征程`
-  - `#狮子心会点燃三国冰河时代`
-- 账号前缀: `01号-10号`
-- 运行模式: 轮转批量发布
+- `app_exe`：小豆芽客户端安装路径
+- `source_dir`：待发布素材目录
+- `published_dir`：已发布素材归档目录
+- 平台任务名、合集名、账号列表、文案和话题
 
-## 当前批量规则
+## 运行方式
 
-当前脚本会按 `account_prefixes` 顺序轮转取号：
+### 抖音
 
-- 第一轮每个账号 1 条
-- 第二轮再从 `01号` 开始继续取下一条
-- 视频发完自动停止
+```powershell
+py -3 .\xiaodouya_launcher.py
+```
+
+或双击：
+
+```text
+启动抖音自动发布.bat
+```
+
+### 小红书
+
+```powershell
+py -3 .\xhs_xiaodouya_launcher.py
+```
+
+或双击：
+
+```text
+启动小红书自动发布.bat
+```
 
 ## 使用注意
 
-- 运行时保持电脑前台，不要切走窗口
-- 如果出现验证码、掉线、异常弹窗，先手动处理，再重新运行
-- 如果小豆芽页面结构变化，按钮文字或位置可能需要同步更新
-- 如果某个账号从“查看详情”进入任务详情后长时间白屏，先手动刷新或重新进入一次该任务，再运行脚本
+- 运行前先打开并登录 `新榜小豆芽`
+- 自动化执行期间尽量不要操作鼠标和键盘
+- 如果出现验证码、掉线或异常弹窗，请先人工处理后再继续
+- 客户端页面结构变化后，脚本中的按钮文案、控件定位或等待时间可能需要调整
+
+## 仓库说明
+
+为避免泄露本地环境与运行痕迹，以下内容默认不上传：
+
+- 本地虚拟环境
+- 打包产物与构建目录
+- 日志、截图、调试输出
+- 真实配置文件
+- 历史备份目录

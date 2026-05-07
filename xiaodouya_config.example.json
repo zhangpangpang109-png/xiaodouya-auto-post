@@ -1,0 +1,16 @@
+{
+  "app_exe": "C:\\Program Files\\xiaodouya\\新榜小豆芽.exe",
+  "source_dir": "C:\\path\\to\\douyin\\videos",
+  "published_dir": "C:\\path\\to\\douyin\\videos\\已发布",
+  "task_title": "这里填写抖音任务名称",
+  "account_prefixes": [
+    "01号",
+    "02号"
+  ],
+  "hashtags": [
+    "#这里填写话题1",
+    "#这里填写话题2"
+  ],
+  "single_run": false,
+  "publish_delay_sec": 5
+}

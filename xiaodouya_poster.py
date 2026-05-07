@@ -51,7 +51,7 @@ if getattr(sys, 'frozen', False):
 else:
     application_path = Path(__file__).parent
 
-CONFIG_PATH = application_path / "xiaodouya_config.json"
+DEFAULT_CONFIG_PATH = application_path / "xiaodouya_config.json"
 PUBLISHED_HISTORY_PATH = application_path / "published_history.txt"
 
 
@@ -68,7 +68,8 @@ class Config:
 
 
 def load_config() -> Config:
-    data = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    config_path = Path(os.environ.get("XIAODOUYA_CONFIG_PATH", str(DEFAULT_CONFIG_PATH)))
+    data = json.loads(config_path.read_text(encoding="utf-8"))
     return Config(
         source_dir=Path(data["source_dir"]),
         published_dir=Path(data["published_dir"]),

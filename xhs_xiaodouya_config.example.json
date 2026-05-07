@@ -1,0 +1,16 @@
+{
+  "app_exe": "C:\\Program Files\\xiaodouya\\新榜小豆芽.exe",
+  "source_dir": "C:\\path\\to\\xhs\\videos",
+  "published_dir": "C:\\path\\to\\xhs\\videos\\已发布",
+  "collection_name": "这里填写小红书合集名称",
+  "account_prefixes": [
+    "H01",
+    "H02"
+  ],
+  "publish_per_account": 1,
+  "description_text": "#这里填写小红书描述",
+  "publish_delay_sec": 2,
+  "upload_wait_sec": 2,
+  "single_account_mode": false,
+  "single_account": "H01"
+}
