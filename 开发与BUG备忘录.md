@@ -62,8 +62,28 @@
 
 ---
 
-## 三、 环境依赖与运行方式
+### 8. 话题词被填成视频标题（剪贴板竞态）
+- **现象**：配置的 3 个话题词中，前 1-2 个话题被填成了视频标题（文件名），只有最后一个话题正确。
+- **根因**：`copy_text()` 通过 win32 剪贴板写入话题词后，`CloseClipboard` 发出剪贴板变更通知，但小豆芽进程收到通知并读取内容需要时间。原代码 `sleep(0.15)` 不够，前两个话题 `^v` 粘贴时小豆芽还没读到新剪贴板内容，读到的是上一次粘贴的视频标题。标题粘贴不出问题是因为前面有 `^a{BACKSPACE}` + `sleep(0.2)` 自然间隔。
+- **解决**：`copy_text(tag)` 后 `sleep` 从 0.15s 增大到 **0.5s**，给 Windows 剪贴板变更通知链充足的传播时间。涉及文件 `xiaodouya_poster.py` L1079。
+
+### 9. 小红书话题词硬编码，改配置不生效
+- **现象**：把 `xhs_xiaodouya_config.json` 的 `description_text` 从 `#全民天天麻将` 改成 `#富豪麻将`，执行脚本后话题仍是旧的。
+- **根因**：`xhs_xiaodouya_poster.py` 的 `fill_title_and_description()` 方法（L901、L905）把话题词写死了 `"#全民天天麻将小游戏"` + `"@全民天天麻将小游戏"`，完全没有读取 `self.config.description_text`。
+- **解决**：删除硬编码，改为 `self.paste_text(self.config.description_text)`。同时移除了 `@` 账号逐字敲入逻辑。以后改话题只需编辑 `xhs_xiaodouya_config.json` 的 `description_text` 字段。
+
+---
+
+## 三、 项目配置与AI协作规范
+
+### 3.1 配置说明
 - **Python 版本**: 3.x
 - **核心依赖库**: `pywinauto==0.6.9`, `pywin32==311` (见 `requirements.txt`)
-- **配置**: 所有可变参数（账号列表、视频路径、固定话题等）均在同目录下的 `xiaodouya_config.json` 中配置。
-- **启动**: 双击同目录下的 `启动小豆芽自动发布.bat` 即可一键运行。
+- **抖音配置**: `xiaodouya_config.json`（账号列表、视频路径、话题词等）
+- **小红书配置**: `xhs_xiaodouya_config.json`（账号列表、视频路径、`description_text` 话题词等）
+- **启动方式**：
+  - 抖音：`启动抖音自动发布.bat` → 调用 `xiaodouya_launcher.py` → `xiaodouya_poster.py`
+  - 小红书：`启动小红书自动发布.bat` → 调用 `xhs_xiaodouya_launcher.py` → `xhs_xiaodouya_poster.py`
+
+### 3.2 CLAUDE.md
+项目根目录 `CLAUDE.md` 包含 12 条 AI 辅助开发规则（先思后码、简单至上、外科手术式修改等），所有修改本项目的行为都应遵守此规则。两个平台脚本**互不共用代码**，修改一个不得顺带改动另一个。

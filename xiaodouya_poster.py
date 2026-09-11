@@ -508,18 +508,6 @@ class XiaodouyaPoster:
         # 在进入账号后，可能需要等待缓冲
         for _ in range(10):
             self.refresh_window()
-            target = None
-            for control in self.descendants():
-                info = control.element_info
-                name = (info.name or "").strip()
-                if name == "我的任务":
-                    rect = info.rectangle
-                    if rect.right > 0:
-                        target = control
-                        break
-            if target:
-                break
-            
             monetize = None
             for control in self.descendants():
                 info = control.element_info
@@ -530,6 +518,21 @@ class XiaodouyaPoster:
                         monetize = control
                         break
             if monetize:
+                rect = monetize.element_info.rectangle
+                mouse.click(button="left", coords=(rect.left + 30, (rect.top+rect.bottom)//2))
+                time.sleep(1.5)
+                break
+
+            target = None
+            for control in self.descendants():
+                info = control.element_info
+                name = (info.name or "").strip()
+                if name == "我的任务":
+                    rect = info.rectangle
+                    if rect.right > 0:
+                        target = control
+                        break
+            if target:
                 break
             time.sleep(1.0)
 
@@ -573,6 +576,34 @@ class XiaodouyaPoster:
                         if rect.right > 0:
                             target = control
                             break
+
+        if not target:
+            # 多给3轮机会：重新点击变现中心并等待我的任务出现
+            for _ in range(3):
+                self.refresh_window()
+                monetize = None
+                for control in self.descendants():
+                    info = control.element_info
+                    name = (info.name or "").strip()
+                    if "变现中心" in name:
+                        rect = info.rectangle
+                        if rect.right > 0 and rect.bottom > 0:
+                            monetize = control
+                            break
+                if monetize:
+                    rect = monetize.element_info.rectangle
+                    mouse.click(button="left", coords=(rect.left + 30, (rect.top+rect.bottom)//2))
+                    time.sleep(3)
+                    self.refresh_window()
+                    for control in self.descendants():
+                        name = (control.element_info.name or "").strip()
+                        rect = control.element_info.rectangle
+                        if name == "我的任务" and rect.right > 0 and rect.bottom > 0:
+                            target = control
+                            break
+                    if target:
+                        break
+                time.sleep(2)
 
         if not target:
             # 可能是停留在投稿等全屏页
@@ -645,30 +676,182 @@ class XiaodouyaPoster:
         time.sleep(2)
 
     def click_task_detail(self, task_title: str) -> None:
+        primary_detail_text = "查看详情"
+        fallback_detail_texts = ("去上传", "上传视频", "继续上传", "查看任务", "进入任务", "详情")
+
+        if self.is_publish_editor_page():
+            return
+
+        try:
+            if self.wait_task_detail_ready(timeout=1.5) == "task_detail":
+                return
+        except Exception:
+            pass
+
+        def valid_rect(rect) -> bool:
+            return rect.right > rect.left and rect.bottom > rect.top
+
+        def rect_center(rect) -> tuple[int, int]:
+            return ((rect.left + rect.right) // 2, (rect.top + rect.bottom) // 2)
+
+        def append_debug_log(message: str) -> None:
+            try:
+                with open("error_log.txt", "a", encoding="utf-8") as f:
+                    f.write(message.rstrip() + "\n")
+            except Exception:
+                pass
+
+        def dump_task_candidates(desc) -> None:
+            lines = [f"[DEBUG] click_task_detail 失败快照，目标任务：{task_title}"]
+            for control in desc:
+                try:
+                    info = control.element_info
+                    name = (info.name or "").strip()
+                    rect = info.rectangle
+                    if not valid_rect(rect):
+                        continue
+                    if rect.left < 900 or rect.top < 200:
+                        continue
+                    if (
+                        task_title in name
+                        or "任务" in name
+                        or primary_detail_text in name
+                        or any(text in name for text in fallback_detail_texts)
+                    ):
+                        lines.append(
+                            f"[DEBUG] {info.control_type}: '{safe_console_text(name)}' Rect=({rect.left},{rect.top},{rect.right},{rect.bottom})"
+                        )
+                except Exception:
+                    continue
+            append_debug_log("\n".join(lines))
+
         target = None
-        for _ in range(5):
+        fallback_title = None
+        fallback_card = None
+        fallback_click_coords = None
+
+        for attempt in range(8):
             self.refresh_window()
             desc = self.descendants()
-            for index, control in enumerate(desc):
-                name = (control.element_info.name or "").strip()
-                if name == task_title:
-                    for next_control in desc[index + 1 : index + 25]:
-                        next_name = (next_control.element_info.name or "").strip()
-                        if next_name == "查看详情":
-                            rect = next_control.element_info.rectangle
-                            if rect.right > 0 and rect.bottom > 0:
-                                target = next_control
-                                break
-                    if target:
+            title_control = None
+            title_rect = None
+            visible_detail_controls = []
+
+            for control in desc:
+                info = control.element_info
+                name = (info.name or "").strip()
+                rect = info.rectangle
+                if not valid_rect(rect):
+                    continue
+                if name == primary_detail_text or primary_detail_text in name:
+                    visible_detail_controls.append(control)
+                if name == task_title or task_title in name:
+                    title_control = control
+                    title_rect = rect
+                    break
+
+            if title_control and title_rect:
+                fallback_title = title_control
+
+                # 先找同一张任务卡里，位于标题右侧的“查看详情”按钮。
+                candidate_controls = []
+                for control in desc:
+                    info = control.element_info
+                    name = (info.name or "").strip()
+                    rect = info.rectangle
+                    if not valid_rect(rect):
+                        continue
+                    if rect.left < title_rect.left - 60 or rect.top > title_rect.bottom + 220 or rect.bottom < title_rect.top - 40:
+                        continue
+                    if rect.right < title_rect.right - 20:
+                        continue
+                    candidate_controls.append(control)
+
+                for control in candidate_controls:
+                    name = (control.element_info.name or "").strip()
+                    if name == primary_detail_text:
+                        target = control
                         break
+
+                if not target:
+                    for control in candidate_controls:
+                        name = (control.element_info.name or "").strip()
+                        if primary_detail_text in name:
+                            target = control
+                            break
+
+                if not target:
+                    for control in candidate_controls:
+                        name = (control.element_info.name or "").strip()
+                        if any(text in name for text in fallback_detail_texts):
+                            target = control
+                            break
+
+                # 如果标题找到了，但按钮控件树不稳定，就直接点击标题右侧的任务卡操作区。
+                if not target:
+                    click_y = (title_rect.top + title_rect.bottom) // 2
+                    click_x = min(max(title_rect.right + 520, 2050), 2380)
+                    fallback_click_coords = (click_x, click_y)
+
+                # 如果按钮文本漂移，就退回找标题所在任务卡的可点击容器。
+                if not target:
+                    for control in desc:
+                        info = control.element_info
+                        rect = info.rectangle
+                        if not valid_rect(rect):
+                            continue
+                        if rect.left <= title_rect.left and rect.right >= title_rect.right and rect.top <= title_rect.top:
+                            if rect.bottom >= title_rect.bottom and rect.height() >= title_rect.height() + 20:
+                                if rect.width() >= title_rect.width() + 120:
+                                    fallback_card = control
+                                    break
+
+            # 如果找不到目标任务，但页面里有可见的“查看详情”，优先点第一个可见按钮。
+            if not target and visible_detail_controls:
+                target = sorted(
+                    visible_detail_controls,
+                    key=lambda c: (
+                        c.element_info.rectangle.top,
+                        c.element_info.rectangle.left,
+                    ),
+                )[0]
+
             if target:
                 break
+
+            # 有些机器第一次点“我的任务”后已经停在任务详情页了。
+            try:
+                state = self.wait_task_detail_ready(timeout=2.0)
+                if state in {"task_detail", "editor", "dialog"}:
+                    return
+            except Exception:
+                pass
+
+            if attempt >= 3:
+                mouse.scroll(coords=(1600, 1100), wheel_dist=-5)
+                time.sleep(0.5)
+
             time.sleep(1.0)
-            
-        if not target:
+
+        click_target = target or fallback_title or fallback_card
+        if not click_target and not fallback_click_coords:
+            try:
+                dump_task_candidates(desc)
+            except Exception:
+                pass
             raise RuntimeError(f"未找到任务详情按钮：{task_title}")
-        rect = target.element_info.rectangle
-        mouse.click(button="left", coords=((rect.left+rect.right)//2, (rect.top+rect.bottom)//2))
+
+        if fallback_click_coords and not target and not fallback_card:
+            click_x, click_y = fallback_click_coords
+            mouse.click(button="left", coords=(click_x, click_y))
+        else:
+            rect = click_target.element_info.rectangle
+            click_x, click_y = rect_center(rect)
+            try:
+                click_target.click_input()
+            except Exception:
+                mouse.click(button="left", coords=(click_x, click_y))
+
         time.sleep(2)
         self.wait_task_detail_ready(timeout=20.0)
 
@@ -725,7 +908,7 @@ class XiaodouyaPoster:
                     click_x = (rect.left + rect.right) // 2
                     click_y = (rect.top + rect.bottom) // 2
                     mouse.click(button="left", coords=(click_x, click_y))
-                time.sleep(1.0)
+                time.sleep(3.0)
                 if self.wait_open_dialog(timeout=3.0) or self.is_publish_editor_page():
                     return
 
@@ -734,7 +917,7 @@ class XiaodouyaPoster:
                 self.normalize_task_page_scroll_top()
             else:
                 mouse.scroll(coords=(1600, 900), wheel_dist=-4)
-            time.sleep(1.0)
+            time.sleep(3.0)
 
         raise RuntimeError("未找到任务详情页里的“上传视频”入口。")
 
@@ -809,12 +992,20 @@ class XiaodouyaPoster:
         full_text = title
 
         def copy_text(text: str) -> None:
-            win32clipboard.OpenClipboard()
-            try:
-                win32clipboard.EmptyClipboard()
-                win32clipboard.SetClipboardText(text, win32con.CF_UNICODETEXT)
-            finally:
-                win32clipboard.CloseClipboard()
+            last_err: Exception | None = None
+            for _ in range(6):
+                try:
+                    win32clipboard.OpenClipboard()
+                    try:
+                        win32clipboard.EmptyClipboard()
+                        win32clipboard.SetClipboardText(text, win32con.CF_UNICODETEXT)
+                    finally:
+                        win32clipboard.CloseClipboard()
+                    return
+                except Exception as exc:
+                    last_err = exc
+                    time.sleep(0.15)
+            raise RuntimeError(f"写入剪贴板失败：{last_err}")
         
         target = None
         for _ in range(3):
@@ -864,7 +1055,7 @@ class XiaodouyaPoster:
         keyboard.send_keys("^v")
         time.sleep(1)
         
-        # 独立的话题填写逻辑：点击“#添加话题”区域
+        # 独立的话题填写逻辑：点击“#添加话题”后，逐个输入3个话题词
         topic_target = None
         self.refresh_window()
         for control in self.descendants():
@@ -877,17 +1068,19 @@ class XiaodouyaPoster:
                 
         if topic_target:
             rect = topic_target.element_info.rectangle
-            mouse.click(button="left", coords=((rect.left+rect.right)//2, (rect.top+rect.bottom)//2))
+            mouse.click(button="left", coords=((rect.left + rect.right) // 2, (rect.top + rect.bottom) // 2))
             time.sleep(1)
-            
-            # 逐个输入话题
             for ht in self.config.hashtags:
-                copy_text(ht)
+                tag = str(ht).strip()
+                if not tag:
+                    continue
+                print(f"填写话题：{safe_console_text(tag)}")
+                copy_text(tag)
+                time.sleep(0.5)
                 keyboard.send_keys("^v")
-                time.sleep(0.5)
-                # 发送回车让抖音确认这是一个话题标签
-                keyboard.send_keys("{ENTER}") 
-                time.sleep(0.5)
+                time.sleep(2.0)
+                keyboard.send_keys("{ENTER}")
+                time.sleep(2.0)
         else:
             print("警告：未找到 '#添加话题' 入口，话题未添加。")
 
