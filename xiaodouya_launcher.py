@@ -69,9 +69,42 @@ def ask_accounts(default_accounts: list[str]) -> list[str]:
             print(f"输入有误：{exc}")
 
 
-def build_runtime_config(config: dict, accounts: list[str]) -> Path:
+def ask_hashtags(default_hashtags: list[str]) -> list[str]:
+    hashtags = [str(tag).strip() for tag in default_hashtags if str(tag).strip()]
+    fallback = ["#疯少的时代", "#百日破冰征程", "#狮心会点燃三国冰河时代"]
+    while len(hashtags) < 3:
+        hashtags.append(fallback[len(hashtags)])
+    hashtags = hashtags[:3]
+
+    print("=" * 58)
+    print("本次抖音话题词确认")
+    for idx, tag in enumerate(hashtags, start=1):
+        print(f"{idx}. {tag}")
+    print("直接回车：使用当前3个话题词")
+    print("输入 y：逐条自定义本次话题词")
+    print("=" * 58)
+
+    choice = input("是否自定义话题词？(y/N)：").strip().lower()
+    if choice not in ("y", "yes"):
+        return hashtags
+
+    result: list[str] = []
+    for idx, old in enumerate(hashtags, start=1):
+        value = input(f"请输入话题{idx}（回车保留 {old}）：").strip()
+        if not value:
+            value = old
+        if not value.startswith("#"):
+            value = f"#{value}"
+        result.append(value)
+
+    print(f"本次将使用话题词：{' '.join(result)}")
+    return result
+
+
+def build_runtime_config(config: dict, accounts: list[str], hashtags: list[str]) -> Path:
     runtime_config = dict(config)
     runtime_config["account_prefixes"] = accounts
+    runtime_config["hashtags"] = hashtags
     temp_dir = Path(tempfile.gettempdir())
     runtime_path = temp_dir / "xiaodouya_runtime_config.json"
     runtime_path.write_text(
@@ -88,8 +121,9 @@ def main() -> int:
         print("默认配置中没有可用账号。")
         return 1
 
+    hashtags = ask_hashtags(list(config.get("hashtags", [])))
     accounts = ask_accounts(default_accounts)
-    runtime_path = build_runtime_config(config, accounts)
+    runtime_path = build_runtime_config(config, accounts, hashtags)
     env = os.environ.copy()
     env["XIAODOUYA_CONFIG_PATH"] = str(runtime_path)
 

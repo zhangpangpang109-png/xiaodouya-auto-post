@@ -60,7 +60,7 @@ def load_config() -> Config:
         publish_per_account=int(data.get("publish_per_account", 1)),
         description_text=data.get(
             "description_text",
-            "#全民天天麻将小游戏#川麻",
+            "#全民天天麻将小游戏 @全民天天麻将小游戏",
         ),
         publish_delay_sec=float(data.get("publish_delay_sec", 8)),
         upload_wait_sec=float(data.get("upload_wait_sec", 10)),
@@ -896,12 +896,12 @@ class XiaodouyaXhsPoster:
         self.paste_text(video_path.stem)
         time.sleep(0.3)
 
-        # 正文（固定话题词）：填写内容并打空格让话题高亮
+        # 正文（话题词）：从配置 description_text 读取
         self.click_named_input_area(("输入正文描述", "添加正文描述", "正文描述", "正文"), retry=3)
         self.paste_text(self.config.description_text)
-        time.sleep(0.3)
-        keyboard.send_keys(" ")
         time.sleep(0.2)
+        keyboard.send_keys(" ")
+        time.sleep(1.5)
         keyboard.send_keys("{ENTER}")
         time.sleep(0.3)
 
